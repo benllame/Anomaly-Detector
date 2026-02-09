@@ -1,4 +1,4 @@
-# 🔍 MVTec Anomaly Detection
+# MVTec Anomaly Detection
 
 [![CI](https://github.com/benllame/Anomaly-Detector/actions/workflows/ci.yml/badge.svg)](https://github.com/benllame/Anomaly-Detector/actions/workflows/ci.yml)
 ![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)
@@ -8,14 +8,14 @@ Sistema de **detección de anomalías industriales** basado en **DINOv2** para e
 
 ![Example Detection](docs/images/000_comparison.png)
 
-## ✨ Características
+## Características
 
-- 🧠 **DINOv2 ViT-B/14** como extractor de características (sin fine-tuning)
-- 📦 **Exportación ONNX** para inferencia ligera sin PyTorch
-- 🌐 **API REST** con FastAPI para integración en producción
-- 🐳 **Docker** para deployment
+- **DINOv2 ViT-B/14** como extractor de características (sin fine-tuning)
+- **Exportación ONNX** para inferencia ligera sin PyTorch
+- **API REST** con FastAPI para integración en producción
+- **Docker** para deployment
 
-## 🏗️ Arquitectura
+## Arquitectura
 
 ```
 ┌─────────────────┐     ┌──────────────────┐     ┌─────────────────┐
@@ -34,7 +34,7 @@ Sistema de **detección de anomalías industriales** basado en **DINOv2** para e
                         └──────────────────┘     └─────────────────┘
 ```
 
-## 📁 Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
 mvtec_anomaly_detection/
@@ -66,7 +66,7 @@ mvtec_anomaly_detection/
 └── requirements.txt
 ```
 
-## 🚀 Instalación
+## Instalación
 
 ### Requisitos
 - Python 3.10+
@@ -166,7 +166,7 @@ anomaly_map = detector.predict(image)
 print(f"Max anomaly score: {anomaly_map.max():.3f}")
 ```
 
-## 📊 Métricas de Evaluación
+## Métricas de Evaluación
 
 Resultados en el dataset MVTec AD completo:
 
@@ -179,13 +179,13 @@ Resultados en el dataset MVTec AD completo:
 | **AU-PRO** | 0.831 | ± 0.172 |
 
 **Mejores categorías:**
-- 🥇 Bottle: IoU 0.56, AU-PRO 0.89
-- 🥈 Tile: IoU 0.46, AU-PRO 0.85
-- 🥉 Metal Nut: IoU 0.38, AU-PRO 0.80
+- 1. Bottle: IoU 0.56, AU-PRO 0.89
+- 2. Tile: IoU 0.46, AU-PRO 0.85
+- 3. Metal Nut: IoU 0.38, AU-PRO 0.80
 
 Ver [docs/EVALUATION.md](docs/EVALUATION.md) para detalles completos.
 
-## 🧪 Tests
+## Tests
 
 ```bash
 # Ejecutar todos los tests
@@ -198,7 +198,7 @@ pytest tests/unit -v -m unit
 pytest tests/ --cov=src --cov-report=html
 ```
 
-## 📈 Monitoring
+## Monitoring
 
 El stack incluye **Prometheus + Grafana** para monitoreo en producción.
 
@@ -212,18 +212,18 @@ La API expone métricas en `/metrics`:
 ### Dashboard Grafana
 
 Dashboard predefinido con paneles para:
-- 📊 Request rate (req/s)
-- ⏱️ Latencia (p50, p95, p99)
-- ✅ Success rate
-- 📉 Requests por status code y endpoint
+- Request rate (req/s)
+- Latencia (p50, p95, p99)
+- Success rate
+- Requests por status code y endpoint
 
 **Acceso:** http://localhost:3000 (admin/admin)
 
-## 📝 Licencia
+## Licencia
 
 Este proyecto está bajo la licencia MIT. Ver [LICENSE](LICENSE) para más detalles.
 
-## 🙏 Agradecimientos
+## Agradecimientos
 
 - [MVTec AD Dataset](https://www.mvtec.com/company/research/datasets/mvtec-ad)
 - [DINOv2 (Meta AI)](https://github.com/facebookresearch/dinov2)
