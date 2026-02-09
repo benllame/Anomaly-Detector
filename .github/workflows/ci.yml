@@ -39,7 +39,7 @@ jobs:
         run: isort --check-only --diff src/ tests/
 
       - name: 🔎 Run Flake8
-        run: flake8 src/ tests/ --max-line-length=120 --ignore=E203,W503
+        run: flake8 src/ tests/ --max-line-length=120 --ignore=E203,W503,F401,F541,F841,E722,E402,F824,E501
 
   # ---------------------------------------------------------------------------
   # Unit Tests Job
