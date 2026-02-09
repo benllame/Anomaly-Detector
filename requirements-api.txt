@@ -1,0 +1,20 @@
+# =============================================================================
+# REQUIREMENTS API - Dependencias mínimas para deployment Docker
+# =============================================================================
+
+# Core inference
+onnxruntime>=1.16.0          # Runtime ONNX para inferencia (CPU)
+# onnxruntime-gpu>=1.16.0    # Descomentar para GPU/CUDA
+
+numpy>=1.24.0                 # Arrays y operaciones numéricas
+scipy>=1.10.0                 # Gaussian filter para anomaly maps
+Pillow>=9.0.0                 # Carga y preprocesamiento de imágenes
+opencv-python-headless>=4.8.0 # Resize de mapas (versión sin GUI, más ligera)
+
+# API REST con FastAPI
+fastapi>=0.100.0              # Framework API REST
+uvicorn[standard]>=0.23.0     # Servidor ASGI con extras (websockets, watchfiles)
+python-multipart>=0.0.6       # Subida de archivos en FastAPI
+
+# Opcional para visualización/debug
+# matplotlib>=3.7.0

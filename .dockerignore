@@ -1,0 +1,74 @@
+# =============================================================================
+# .dockerignore - Archivos a excluir del build de Docker
+# =============================================================================
+
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+*.egg
+.mypy_cache/
+.pytest_cache/
+
+# Entornos virtuales
+venv/
+env/
+.venv/
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Datos de entrenamiento (muy pesados)
+data/
+datasets/
+*.tar.gz
+*.zip
+
+# Modelos PyTorch (solo necesitamos ONNX)
+*.pt
+*.pth
+checkpoints/
+
+# Logs y temporales
+logs/
+*.log
+tmp/
+temp/
+
+# Documentación
+docs/
+*.md
+!README.md
+
+# Tests
+tests/
+test_*
+
+# Notebooks y exploración
+notebooks/
+experiments/
+
+# =============================================================================
+# Modelos exportados (ONNX y memory banks - montar como volumen en producción)
+# =============================================================================
+src/exported/
+exported/
+*.onnx
+*.npz
+*.json

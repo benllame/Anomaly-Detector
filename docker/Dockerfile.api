@@ -1,0 +1,47 @@
+# =============================================================================
+# Dockerfile para API de Detección de Anomalías MVTec AD
+# =============================================================================
+# Imagen base ligera con Python
+FROM python:3.10-slim
+
+# Argumentos de build
+ARG DEBIAN_FRONTEND=noninteractive
+
+# Variables de entorno
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
+
+# Directorio de trabajo
+WORKDIR /app
+
+# Instalar dependencias del sistema (mínimas para opencv-headless)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libglib2.0-0 \
+    libgl1 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copiar requirements e instalar dependencias Python
+COPY requirements-api.txt .
+RUN pip install --no-cache-dir -r requirements-api.txt
+
+# Copiar código de la API
+COPY src/deployment/*.py ./src/deployment/
+
+# Modelos exportados: NO copiar en la imagen (muy pesados)
+# Montar como volumen en docker-compose.yml
+# COPY src/exported/ ./src/exported/
+
+# Exponer puerto
+EXPOSE 8000
+
+# Variables de entorno para la API
+ENV EXPORTED_DIR=/app/src/exported
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD curl -f http://localhost:8000/health || exit 1
+
+# Comando de inicio
+CMD ["uvicorn", "src.deployment.api_rest:app", "--host", "0.0.0.0", "--port", "8000"]

@@ -9,7 +9,7 @@ class ProjectConfig:
     # Paths
     PROJECT_ROOT: Path = Path(__file__).parent.parent
     DATA_DIR: Path = PROJECT_ROOT / "data"
-    RAW_DATA_DIR: Path = DATA_DIR / "raw" / "raw"
+    RAW_DATA_DIR: Path = DATA_DIR / "raw"
     PROCESSED_DATA_DIR: Path = DATA_DIR / "processed"
     MODELS_DIR: Path = PROJECT_ROOT / "models"
     EXPERIMENTS_DIR: Path = PROJECT_ROOT / "experiments"

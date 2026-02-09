@@ -1,0 +1,49 @@
+# =============================================================================
+# Docker Compose para API de Detección de Anomalías
+# =============================================================================
+# Uso:
+#   docker-compose -f docker/docker-compose.yml up --build
+#   docker-compose -f docker/docker-compose.yml up -d  # background
+
+services:
+  anomaly-api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.api
+    container_name: mvtec-anomaly-api
+    ports:
+      - "8000:8000"
+    environment:
+      - EXPORTED_DIR=/app/src/exported
+    volumes:
+      # Montar modelos exportados (en lugar de COPY en Dockerfile)
+      - ../src/exported:/app/src/exported:ro
+      # Montar logs (opcional)
+      - ./logs:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    # Recursos (ajustar según disponibilidad)
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+        reservations:
+          memory: 2G
+
+  # Servicio opcional con GPU (requiere nvidia-docker)
+  # anomaly-api-gpu:
+  #   build:
+  #     context: ..
+  #     dockerfile: docker/Dockerfile.api.gpu
+  #   deploy:
+  #     resources:
+  #       reservations:
+  #         devices:
+  #           - driver: nvidia
+  #             count: 1
+  #             capabilities: [gpu]

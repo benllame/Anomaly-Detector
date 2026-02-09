@@ -1,0 +1,29 @@
+# =============================================================================
+# REQUIREMENTS - Dependencias completas (entrenamiento + desarrollo)
+# =============================================================================
+
+torch>=2.0.0
+torchvision>=0.15.0
+transformers>=4.35.0          # DINOv2 y procesadores de imagen
+
+# ONNX
+onnx>=1.14.0                  # Formato ONNX
+onnxruntime>=1.16.0           # Runtime CPU
+# onnxruntime-gpu>=1.16.0     # Descomentar para GPU
+
+numpy>=1.24.0
+scipy>=1.10.0
+pandas>=2.0.0
+Pillow>=9.0.0
+opencv-python>=4.8.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+scikit-learn>=1.3.0
+pyyaml>=6.0
+tqdm>=4.65.0
+jupyter>=1.0.0
+ipykernel>=6.0.0
+black>=23.0.0
+isort>=5.12.0
+flake8>=6.0.0
+pytest>=7.0.0
