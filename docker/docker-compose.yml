@@ -1,11 +1,19 @@
 # =============================================================================
-# Docker Compose para API de Detección de Anomalías
+# Docker Compose para API de Detección de Anomalías + Monitoring Stack
 # =============================================================================
 # Uso:
 #   docker-compose -f docker/docker-compose.yml up --build
 #   docker-compose -f docker/docker-compose.yml up -d  # background
+#
+# Servicios:
+#   - anomaly-api: API REST de detección (puerto 8000)
+#   - prometheus: Métricas y almacenamiento (puerto 9090)
+#   - grafana: Dashboards de monitoreo (puerto 3000)
 
 services:
+  # ===========================================================================
+  # API de Detección de Anomalías
+  # ===========================================================================
   anomaly-api:
     build:
       context: ..
@@ -34,16 +42,92 @@ services:
           memory: 4G
         reservations:
           memory: 2G
+    networks:
+      - monitoring-network
 
-  # Servicio opcional con GPU (requiere nvidia-docker)
-  # anomaly-api-gpu:
-  #   build:
-  #     context: ..
-  #     dockerfile: docker/Dockerfile.api.gpu
-  #   deploy:
-  #     resources:
-  #       reservations:
-  #         devices:
-  #           - driver: nvidia
-  #             count: 1
-  #             capabilities: [gpu]
+  # ===========================================================================
+  # Prometheus - Almacenamiento de métricas
+  # ===========================================================================
+  prometheus:
+    image: prom/prometheus:v2.48.0
+    container_name: mvtec-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ../monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=15d'
+      - '--web.enable-lifecycle'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:9090/-/healthy"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - monitoring-network
+
+  # ===========================================================================
+  # Grafana - Visualización de dashboards
+  # ===========================================================================
+  grafana:
+    image: grafana/grafana:10.2.2
+    container_name: mvtec-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_SERVER_ROOT_URL=http://localhost:3000
+    volumes:
+      - ../monitoring/grafana/datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml:ro
+      - ../monitoring/grafana/dashboards.yml:/etc/grafana/provisioning/dashboards/dashboards.yml:ro
+      - ../monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards/json:ro
+      - grafana-data:/var/lib/grafana
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    depends_on:
+      - prometheus
+    networks:
+      - monitoring-network
+
+# =============================================================================
+# Volúmenes persistentes
+# =============================================================================
+volumes:
+  prometheus-data:
+    driver: local
+  grafana-data:
+    driver: local
+
+# =============================================================================
+# Red interna para comunicación entre servicios
+# =============================================================================
+networks:
+  monitoring-network:
+    driver: bridge
+
+# =============================================================================
+# Servicio opcional con GPU (requiere nvidia-docker)
+# =============================================================================
+# anomaly-api-gpu:
+#   build:
+#     context: ..
+#     dockerfile: docker/Dockerfile.api.gpu
+#   deploy:
+#     resources:
+#       reservations:
+#         devices:
+#           - driver: nvidia
+#             count: 1
+#             capabilities: [gpu]

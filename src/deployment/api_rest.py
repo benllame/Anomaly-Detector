@@ -35,6 +35,7 @@ import numpy as np
 from fastapi import FastAPI, File, Form, HTTPException, Query, UploadFile
 from fastapi.responses import JSONResponse
 from PIL import Image
+from prometheus_fastapi_instrumentator import Instrumentator
 from pydantic import BaseModel, Field
 
 # Importar detector local (relativo para soporte Docker)
@@ -173,6 +174,12 @@ app = FastAPI(
     version="1.0.0",
     lifespan=lifespan,
 )
+
+# =============================================================================
+# PROMETHEUS METRICS
+# =============================================================================
+# Métricas automáticas: http_requests_total, http_request_duration_seconds, etc.
+Instrumentator().instrument(app).expose(app)
 
 
 # =============================================================================

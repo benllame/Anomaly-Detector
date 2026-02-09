@@ -1,0 +1,37 @@
+# =============================================================================
+# Prometheus Configuration para MVTec Anomaly Detection API
+# =============================================================================
+# Ubicación: monitoring/prometheus/prometheus.yml
+# Uso: Montado en contenedor Prometheus vía docker-compose
+
+global:
+  scrape_interval: 10s          # Intervalo de recolección de métricas
+  evaluation_interval: 10s       # Intervalo de evaluación de reglas
+
+# Configuración de alertas (opcional, expandir según necesidad)
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: []
+
+# Reglas de grabación (opcional)
+rule_files: []
+
+# Configuración de scrape targets
+scrape_configs:
+  # Métricas propias de Prometheus
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+        labels:
+          service: 'prometheus'
+
+  # API de Detección de Anomalías
+  - job_name: 'anomaly-api'
+    static_configs:
+      - targets: ['anomaly-api:8000']
+        labels:
+          service: 'anomaly-detection'
+          environment: 'production'
+    metrics_path: '/metrics'
+    scrape_interval: 10s         # Más frecuente para la API

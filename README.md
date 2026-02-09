@@ -50,7 +50,14 @@ mvtec_anomaly_detection/
 │   └── config.py
 ├── docker/
 │   ├── Dockerfile.api
-│   └── docker-compose.yml
+│   └── docker-compose.yml       # Stack completo con monitoring
+├── monitoring/
+│   ├── prometheus/
+│   │   └── prometheus.yml       # Configuración Prometheus
+│   └── grafana/
+│       ├── datasources.yml      # Datasource Prometheus
+│       ├── dashboards.yml       # Provisioning dashboards
+│       └── dashboards/          # JSON dashboards
 ├── notebooks/                    # Análisis exploratorio
 ├── tests/                        # Unit & integration tests
 ├── docs/
@@ -81,12 +88,20 @@ source venv/bin/activate  # Linux/Mac
 pip install -r requirements.txt
 ```
 
-### Con Docker
+### Con Docker (incluye Monitoring)
 
 ```bash
 cd docker
 docker-compose up --build
 ```
+
+**Servicios disponibles:**
+
+| Servicio | URL | Descripción |
+|----------|-----|-------------|
+| API | http://localhost:8000 | API REST de detección |
+| Prometheus | http://localhost:9090 | Métricas y almacenamiento |
+| Grafana | http://localhost:3000 | Dashboards (admin/admin) |
 
 ## 📖 Uso
 
@@ -182,6 +197,27 @@ pytest tests/unit -v -m unit
 # Con coverage
 pytest tests/ --cov=src --cov-report=html
 ```
+
+## 📈 Monitoring
+
+El stack incluye **Prometheus + Grafana** para monitoreo en producción.
+
+### Métricas Disponibles
+
+La API expone métricas en `/metrics`:
+- `http_requests_total` - Total de requests por método, endpoint y status
+- `http_request_duration_seconds` - Latencia (histograma con percentiles)
+- `http_requests_in_progress` - Requests concurrentes
+
+### Dashboard Grafana
+
+Dashboard predefinido con paneles para:
+- 📊 Request rate (req/s)
+- ⏱️ Latencia (p50, p95, p99)
+- ✅ Success rate
+- 📉 Requests por status code y endpoint
+
+**Acceso:** http://localhost:3000 (admin/admin)
 
 ## 📝 Licencia
 

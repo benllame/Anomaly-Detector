@@ -16,5 +16,8 @@ fastapi>=0.100.0              # Framework API REST
 uvicorn[standard]>=0.23.0     # Servidor ASGI con extras (websockets, watchfiles)
 python-multipart>=0.0.6       # Subida de archivos en FastAPI
 
+# Monitoring
+prometheus-fastapi-instrumentator>=6.0.0  # Métricas Prometheus para FastAPI
+
 # Opcional para visualización/debug
 # matplotlib>=3.7.0

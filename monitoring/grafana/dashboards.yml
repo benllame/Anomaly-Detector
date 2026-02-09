@@ -1,0 +1,19 @@
+# =============================================================================
+# Grafana Dashboard Provisioning
+# =============================================================================
+# Ubicación: monitoring/grafana/dashboards.yml
+# Configuración para cargar dashboards automáticamente
+
+apiVersion: 1
+
+providers:
+  - name: 'MVTec Anomaly Detection'
+    orgId: 1
+    folder: 'Anomaly Detection'
+    folderUid: 'anomaly-detection'
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 30
+    allowUiUpdates: true
+    options:
+      path: /etc/grafana/provisioning/dashboards/json
