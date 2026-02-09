@@ -1,196 +1,270 @@
-# 📊 Reporte de Evaluación MVTec AD
+# 📊 Evaluation Report - MVTec AD Anomaly Detection
 
-**Fecha:** 2026-02-08 14:54:40
+> **DINOv2-based anomaly detection system evaluation on the complete MVTec AD dataset**
 
-## ⚙️ Configuración
+---
 
-- **Modelo:** `/home/bllancao/Portafolio/mvtec_anomaly_detection/models/dinov2-base`
-- **Capa DINOv2:** -1
-- **k-NN (k):** 1
-- **Umbral:** 0.6
-- **Imágenes 'good' para Memory Bank:** 200
+## ⚙️ Configuration
 
-## 🌍 Métricas Globales
+| Parameter | Value |
+|-----------|-------|
+| **Model** | DINOv2 ViT-B/14 |
+| **Layer** | -1 (last) |
+| **k-NN (k)** | 1 |
+| **Threshold** | 0.6 |
+| **Memory Bank Size** | 200 images/class |
 
-- **Total imágenes evaluadas:** 1258
-- **Total categorías:** 15
+---
 
-| Métrica | Valor | Desv. Est. |
-|---------|-------|------------|
-| IoU | 0.2765 | ± 0.1961 |
-| Dice | 0.3981 | ± 0.2318 |
-| Precision | 0.3216 | ± 0.2484 |
-| Recall | 0.7953 | ± 0.2501 |
-| F1 | 0.3981 | ± 0.2318 |
-| PRO | 0.7747 | ± 0.2645 |
-| AU-PRO | 0.8309 | ± 0.1719 |
+## � Global Metrics
 
-## 🏷️ Métricas por Categoría
+<table>
+<tr>
+<td>
 
-| Categoría | IoU | Dice | F1 | Precision | Recall | AU-PRO |
-|-----------|-----|------|----|-----------|----- --|--------|
-| bottle | 0.5637 | 0.7099 | 0.7099 | 0.6339 | 0.8779 | 0.8913 |
-| cable | 0.3041 | 0.4425 | 0.4425 | 0.3391 | 0.7909 | 0.7497 |
-| capsule | 0.2009 | 0.3139 | 0.3139 | 0.2315 | 0.7832 | 0.8770 |
-| carpet | 0.2703 | 0.4005 | 0.4005 | 0.2740 | 0.9670 | 0.8910 |
-| grid | 0.1375 | 0.2357 | 0.2357 | 0.1407 | 0.8709 | 0.8513 |
-| hazelnut | 0.3360 | 0.4787 | 0.4787 | 0.3445 | 0.9531 | 0.8999 |
-| leather | 0.1102 | 0.1875 | 0.1875 | 0.1103 | 0.9977 | 0.9327 |
-| metal_nut | 0.3825 | 0.5303 | 0.5303 | 0.5529 | 0.5986 | 0.7988 |
-| pill | 0.2932 | 0.4258 | 0.4258 | 0.3691 | 0.7975 | 0.8774 |
-| screw | 0.0912 | 0.1520 | 0.1520 | 0.0956 | 0.5556 | 0.6756 |
-| tile | 0.4595 | 0.5932 | 0.5932 | 0.4945 | 0.9325 | 0.8503 |
-| toothbrush | 0.2145 | 0.3332 | 0.3332 | 0.2299 | 0.8433 | 0.8669 |
-| transistor | 0.2868 | 0.4106 | 0.4106 | 0.4057 | 0.5582 | 0.6911 |
-| wood | 0.3216 | 0.4535 | 0.4535 | 0.3782 | 0.7693 | 0.8020 |
-| zipper | 0.2804 | 0.4232 | 0.4232 | 0.3310 | 0.7268 | 0.8091 |
+### Summary
+- 📷 **1,258** images evaluated
+- 🏷️ **15** categories
+- ⏱️ ~50ms/image (CPU)
 
-## 🔬 Detalle por Tipo de Anomalía
+</td>
+<td>
 
-### BOTTLE
+| Metric | Value | Std Dev |
+|:------:|:-----:|:-------:|
+| **IoU** | 0.277 | ± 0.196 |
+| **Dice** | 0.398 | ± 0.232 |
+| **Precision** | 0.322 | ± 0.248 |
+| **Recall** | 0.795 | ± 0.250 |
+| **AU-PRO** | 0.831 | ± 0.172 |
 
-| Tipo de Anomalía | Imágenes | IoU | Dice | F1 | AU-PRO |
-|------------------|----------|-----|------|----|----- --|
-| broken_large | 20 | 0.6007 | 0.7490 | 0.7490 | 0.8788 |
-| broken_small | 22 | 0.5307 | 0.6900 | 0.6900 | 0.8707 |
-| contamination | 21 | 0.5631 | 0.6936 | 0.6936 | 0.9250 |
+</td>
+</tr>
+</table>
 
-### CABLE
+---
 
-| Tipo de Anomalía | Imágenes | IoU | Dice | F1 | AU-PRO |
-|------------------|----------|-----|------|----|----- --|
-| bent_wire | 13 | 0.3629 | 0.5244 | 0.5244 | 0.8830 |
-| cable_swap | 12 | 0.0935 | 0.1691 | 0.1691 | 0.2837 |
-| combined | 11 | 0.2698 | 0.4201 | 0.4201 | 0.6239 |
-| cut_inner_insulation | 14 | 0.3514 | 0.5103 | 0.5103 | 0.8511 |
-| cut_outer_insulation | 10 | 0.1847 | 0.3054 | 0.3054 | 0.7622 |
-| missing_cable | 12 | 0.5423 | 0.7007 | 0.7007 | 0.8528 |
-| missing_wire | 10 | 0.2580 | 0.3926 | 0.3926 | 0.9162 |
-| poke_insulation | 10 | 0.3312 | 0.4708 | 0.4708 | 0.8294 |
+## � Top Performing Categories
 
-### CAPSULE
+| Rank | Category | IoU | Dice | AU-PRO | Performance |
+|:----:|:---------|:---:|:----:|:------:|:-----------:|
+| 🥇 | **Bottle** | 0.564 | 0.710 | 0.891 | ████████░░ |
+| 🥈 | **Tile** | 0.460 | 0.593 | 0.850 | ███████░░░ |
+| 🥉 | **Metal Nut** | 0.383 | 0.530 | 0.799 | ██████░░░░ |
 
-| Tipo de Anomalía | Imágenes | IoU | Dice | F1 | AU-PRO |
-|------------------|----------|-----|------|----|----- --|
-| crack | 23 | 0.1640 | 0.2624 | 0.2624 | 0.8822 |
-| faulty_imprint | 22 | 0.1981 | 0.3119 | 0.3119 | 0.8947 |
-| poke | 21 | 0.1335 | 0.2252 | 0.2252 | 0.9019 |
-| scratch | 23 | 0.2312 | 0.3555 | 0.3555 | 0.8740 |
-| squeeze | 20 | 0.2823 | 0.4205 | 0.4205 | 0.8291 |
+---
 
-### CARPET
+## 📈 Complete Results by Category
 
-| Tipo de Anomalía | Imágenes | IoU | Dice | F1 | AU-PRO |
-|------------------|----------|-----|------|----|----- --|
-| color | 19 | 0.2919 | 0.4420 | 0.4420 | 0.8966 |
-| cut | 17 | 0.4992 | 0.6603 | 0.6603 | 0.9152 |
-| hole | 17 | 0.3308 | 0.4912 | 0.4912 | 0.9349 |
-| metal_contamination | 17 | 0.1108 | 0.1983 | 0.1983 | 0.8915 |
-| thread | 19 | 0.1327 | 0.2265 | 0.2265 | 0.8240 |
+<details>
+<summary><b>🍾 Bottle</b> — IoU: 0.564 | AU-PRO: 0.891</summary>
 
-### GRID
+| Defect Type | Images | IoU | Dice | AU-PRO |
+|:------------|:------:|:---:|:----:|:------:|
+| broken_large | 20 | 0.601 | 0.749 | 0.879 |
+| broken_small | 22 | 0.531 | 0.690 | 0.871 |
+| contamination | 21 | 0.563 | 0.694 | 0.925 |
 
-| Tipo de Anomalía | Imágenes | IoU | Dice | F1 | AU-PRO |
-|------------------|----------|-----|------|----|----- --|
-| bent | 12 | 0.1493 | 0.2540 | 0.2540 | 0.8561 |
-| broken | 12 | 0.0925 | 0.1651 | 0.1651 | 0.8312 |
-| glue | 11 | 0.1673 | 0.2797 | 0.2797 | 0.8576 |
-| metal_contamination | 11 | 0.1063 | 0.1911 | 0.1911 | 0.8747 |
-| thread | 11 | 0.1751 | 0.2935 | 0.2935 | 0.8385 |
+</details>
 
-### HAZELNUT
+<details>
+<summary><b>🔌 Cable</b> — IoU: 0.304 | AU-PRO: 0.750</summary>
 
-| Tipo de Anomalía | Imágenes | IoU | Dice | F1 | AU-PRO |
-|------------------|----------|-----|------|----|----- --|
-| crack | 18 | 0.4368 | 0.5757 | 0.5757 | 0.8996 |
-| cut | 17 | 0.1678 | 0.2847 | 0.2847 | 0.9158 |
-| hole | 18 | 0.2942 | 0.4443 | 0.4443 | 0.8850 |
-| print | 17 | 0.4418 | 0.6063 | 0.6063 | 0.9001 |
+| Defect Type | Images | IoU | Dice | AU-PRO |
+|:------------|:------:|:---:|:----:|:------:|
+| bent_wire | 13 | 0.363 | 0.524 | 0.883 |
+| cable_swap | 12 | 0.094 | 0.169 | 0.284 |
+| combined | 11 | 0.270 | 0.420 | 0.624 |
+| cut_inner_insulation | 14 | 0.351 | 0.510 | 0.851 |
+| cut_outer_insulation | 10 | 0.185 | 0.305 | 0.762 |
+| missing_cable | 12 | 0.542 | 0.701 | 0.853 |
+| missing_wire | 10 | 0.258 | 0.393 | 0.916 |
+| poke_insulation | 10 | 0.331 | 0.471 | 0.829 |
 
-### LEATHER
+</details>
 
-| Tipo de Anomalía | Imágenes | IoU | Dice | F1 | AU-PRO |
-|------------------|----------|-----|------|----|----- --|
-| color | 19 | 0.0866 | 0.1567 | 0.1567 | 0.9180 |
-| cut | 19 | 0.0642 | 0.1181 | 0.1181 | 0.9479 |
-| fold | 17 | 0.2431 | 0.3799 | 0.3799 | 0.9400 |
-| glue | 19 | 0.1289 | 0.2240 | 0.2240 | 0.9138 |
-| poke | 18 | 0.0381 | 0.0727 | 0.0727 | 0.9455 |
+<details>
+<summary><b>💊 Capsule</b> — IoU: 0.201 | AU-PRO: 0.877</summary>
 
-### METAL_NUT
+| Defect Type | Images | IoU | Dice | AU-PRO |
+|:------------|:------:|:---:|:----:|:------:|
+| crack | 23 | 0.164 | 0.262 | 0.882 |
+| faulty_imprint | 22 | 0.198 | 0.312 | 0.895 |
+| poke | 21 | 0.134 | 0.225 | 0.902 |
+| scratch | 23 | 0.231 | 0.356 | 0.874 |
+| squeeze | 20 | 0.282 | 0.421 | 0.829 |
 
-| Tipo de Anomalía | Imágenes | IoU | Dice | F1 | AU-PRO |
-|------------------|----------|-----|------|----|----- --|
-| bent | 25 | 0.2062 | 0.3320 | 0.3320 | 0.8234 |
-| color | 22 | 0.3675 | 0.5207 | 0.5207 | 0.8361 |
-| flip | 23 | 0.5491 | 0.7045 | 0.7045 | 0.7248 |
-| scratch | 23 | 0.4220 | 0.5809 | 0.5809 | 0.8102 |
+</details>
 
-### PILL
+<details>
+<summary><b>🧶 Carpet</b> — IoU: 0.270 | AU-PRO: 0.891</summary>
 
-| Tipo de Anomalía | Imágenes | IoU | Dice | F1 | AU-PRO |
-|------------------|----------|-----|------|----|----- --|
-| color | 25 | 0.1040 | 0.1796 | 0.1796 | 0.8920 |
-| combined | 17 | 0.2863 | 0.4302 | 0.4302 | 0.7974 |
-| contamination | 21 | 0.3511 | 0.5022 | 0.5022 | 0.8723 |
-| crack | 26 | 0.2301 | 0.3598 | 0.3598 | 0.9127 |
-| faulty_imprint | 19 | 0.4066 | 0.5558 | 0.5558 | 0.8900 |
-| pill_type | 9 | 0.3694 | 0.5258 | 0.5258 | 0.8192 |
-| scratch | 24 | 0.3942 | 0.5435 | 0.5435 | 0.8971 |
+| Defect Type | Images | IoU | Dice | AU-PRO |
+|:------------|:------:|:---:|:----:|:------:|
+| color | 19 | 0.292 | 0.442 | 0.897 |
+| cut | 17 | 0.499 | 0.660 | 0.915 |
+| hole | 17 | 0.331 | 0.491 | 0.935 |
+| metal_contamination | 17 | 0.111 | 0.198 | 0.892 |
+| thread | 19 | 0.133 | 0.227 | 0.824 |
 
-### SCREW
+</details>
 
-| Tipo de Anomalía | Imágenes | IoU | Dice | F1 | AU-PRO |
-|------------------|----------|-----|------|----|----- --|
-| manipulated_front | 24 | 0.0559 | 0.1010 | 0.1010 | 0.6371 |
-| scratch_head | 24 | 0.0427 | 0.0789 | 0.0789 | 0.7900 |
-| scratch_neck | 25 | 0.1747 | 0.2888 | 0.2888 | 0.9216 |
-| thread_side | 23 | 0.0229 | 0.0427 | 0.0427 | 0.3421 |
-| thread_top | 23 | 0.1559 | 0.2423 | 0.2423 | 0.6626 |
+<details>
+<summary><b>🔲 Grid</b> — IoU: 0.138 | AU-PRO: 0.851</summary>
 
-### TILE
+| Defect Type | Images | IoU | Dice | AU-PRO |
+|:------------|:------:|:---:|:----:|:------:|
+| bent | 12 | 0.149 | 0.254 | 0.856 |
+| broken | 12 | 0.093 | 0.165 | 0.831 |
+| glue | 11 | 0.167 | 0.280 | 0.858 |
+| metal_contamination | 11 | 0.106 | 0.191 | 0.875 |
+| thread | 11 | 0.175 | 0.294 | 0.839 |
 
-| Tipo de Anomalía | Imágenes | IoU | Dice | F1 | AU-PRO |
-|------------------|----------|-----|------|----|----- --|
-| crack | 17 | 0.1144 | 0.2029 | 0.2029 | 0.8388 |
-| glue_strip | 18 | 0.4393 | 0.6031 | 0.6031 | 0.7884 |
-| gray_stroke | 16 | 0.4243 | 0.5872 | 0.5872 | 0.9093 |
-| oil | 18 | 0.5843 | 0.7343 | 0.7343 | 0.8341 |
-| rough | 15 | 0.7628 | 0.8610 | 0.8610 | 0.8939 |
+</details>
 
-### TOOTHBRUSH
+<details>
+<summary><b>🌰 Hazelnut</b> — IoU: 0.336 | AU-PRO: 0.900</summary>
 
-| Tipo de Anomalía | Imágenes | IoU | Dice | F1 | AU-PRO |
-|------------------|----------|-----|------|----|----- --|
-| defective | 30 | 0.2145 | 0.3332 | 0.3332 | 0.8669 |
+| Defect Type | Images | IoU | Dice | AU-PRO |
+|:------------|:------:|:---:|:----:|:------:|
+| crack | 18 | 0.437 | 0.576 | 0.900 |
+| cut | 17 | 0.168 | 0.285 | 0.916 |
+| hole | 18 | 0.294 | 0.444 | 0.885 |
+| print | 17 | 0.442 | 0.606 | 0.900 |
 
-### TRANSISTOR
+</details>
 
-| Tipo de Anomalía | Imágenes | IoU | Dice | F1 | AU-PRO |
-|------------------|----------|-----|------|----|----- --|
-| bent_lead | 10 | 0.1263 | 0.2194 | 0.2194 | 0.8316 |
-| cut_lead | 10 | 0.2521 | 0.3918 | 0.3918 | 0.7958 |
-| damaged_case | 10 | 0.5451 | 0.6929 | 0.6929 | 0.8635 |
-| misplaced | 10 | 0.2235 | 0.3382 | 0.3382 | 0.2735 |
+<details>
+<summary><b>👜 Leather</b> — IoU: 0.110 | AU-PRO: 0.933</summary>
 
-### WOOD
+| Defect Type | Images | IoU | Dice | AU-PRO |
+|:------------|:------:|:---:|:----:|:------:|
+| color | 19 | 0.087 | 0.157 | 0.918 |
+| cut | 19 | 0.064 | 0.118 | 0.948 |
+| fold | 17 | 0.243 | 0.380 | 0.940 |
+| glue | 19 | 0.129 | 0.224 | 0.914 |
+| poke | 18 | 0.038 | 0.073 | 0.946 |
 
-| Tipo de Anomalía | Imágenes | IoU | Dice | F1 | AU-PRO |
-|------------------|----------|-----|------|----|----- --|
-| color | 8 | 0.3678 | 0.5146 | 0.5146 | 0.8764 |
-| combined | 11 | 0.3426 | 0.4703 | 0.4703 | 0.7510 |
-| hole | 10 | 0.1286 | 0.2172 | 0.2172 | 0.8333 |
-| liquid | 10 | 0.4800 | 0.6431 | 0.6431 | 0.8891 |
-| scratch | 21 | 0.3094 | 0.4438 | 0.4438 | 0.7441 |
+</details>
 
-### ZIPPER
+<details>
+<summary><b>🔩 Metal Nut</b> — IoU: 0.383 | AU-PRO: 0.799</summary>
 
-| Tipo de Anomalía | Imágenes | IoU | Dice | F1 | AU-PRO |
-|------------------|----------|-----|------|----|----- --|
-| broken_teeth | 19 | 0.3005 | 0.4439 | 0.4439 | 0.7564 |
-| combined | 16 | 0.2376 | 0.3707 | 0.3707 | 0.7673 |
-| fabric_border | 17 | 0.2374 | 0.3791 | 0.3791 | 0.8457 |
-| fabric_interior | 16 | 0.2861 | 0.4348 | 0.4348 | 0.8185 |
-| rough | 17 | 0.3140 | 0.4581 | 0.4581 | 0.7348 |
-| split_teeth | 18 | 0.2906 | 0.4329 | 0.4329 | 0.8608 |
-| squeezed_teeth | 16 | 0.2924 | 0.4382 | 0.4382 | 0.8862 |
+| Defect Type | Images | IoU | Dice | AU-PRO |
+|:------------|:------:|:---:|:----:|:------:|
+| bent | 25 | 0.206 | 0.332 | 0.823 |
+| color | 22 | 0.368 | 0.521 | 0.836 |
+| flip | 23 | 0.549 | 0.705 | 0.725 |
+| scratch | 23 | 0.422 | 0.581 | 0.810 |
+
+</details>
+
+<details>
+<summary><b>💊 Pill</b> — IoU: 0.293 | AU-PRO: 0.877</summary>
+
+| Defect Type | Images | IoU | Dice | AU-PRO |
+|:------------|:------:|:---:|:----:|:------:|
+| color | 25 | 0.104 | 0.180 | 0.892 |
+| combined | 17 | 0.286 | 0.430 | 0.797 |
+| contamination | 21 | 0.351 | 0.502 | 0.872 |
+| crack | 26 | 0.230 | 0.360 | 0.913 |
+| faulty_imprint | 19 | 0.407 | 0.556 | 0.890 |
+| pill_type | 9 | 0.369 | 0.526 | 0.819 |
+| scratch | 24 | 0.394 | 0.544 | 0.897 |
+
+</details>
+
+<details>
+<summary><b>🔧 Screw</b> — IoU: 0.091 | AU-PRO: 0.676</summary>
+
+| Defect Type | Images | IoU | Dice | AU-PRO |
+|:------------|:------:|:---:|:----:|:------:|
+| manipulated_front | 24 | 0.056 | 0.101 | 0.637 |
+| scratch_head | 24 | 0.043 | 0.079 | 0.790 |
+| scratch_neck | 25 | 0.175 | 0.289 | 0.922 |
+| thread_side | 23 | 0.023 | 0.043 | 0.342 |
+| thread_top | 23 | 0.156 | 0.242 | 0.663 |
+
+</details>
+
+<details>
+<summary><b>🧱 Tile</b> — IoU: 0.460 | AU-PRO: 0.850</summary>
+
+| Defect Type | Images | IoU | Dice | AU-PRO |
+|:------------|:------:|:---:|:----:|:------:|
+| crack | 17 | 0.114 | 0.203 | 0.839 |
+| glue_strip | 18 | 0.439 | 0.603 | 0.788 |
+| gray_stroke | 16 | 0.424 | 0.587 | 0.909 |
+| oil | 18 | 0.584 | 0.734 | 0.834 |
+| rough | 15 | 0.763 | 0.861 | 0.894 |
+
+</details>
+
+<details>
+<summary><b>🪥 Toothbrush</b> — IoU: 0.215 | AU-PRO: 0.867</summary>
+
+| Defect Type | Images | IoU | Dice | AU-PRO |
+|:------------|:------:|:---:|:----:|:------:|
+| defective | 30 | 0.215 | 0.333 | 0.867 |
+
+</details>
+
+<details>
+<summary><b>📻 Transistor</b> — IoU: 0.287 | AU-PRO: 0.691</summary>
+
+| Defect Type | Images | IoU | Dice | AU-PRO |
+|:------------|:------:|:---:|:----:|:------:|
+| bent_lead | 10 | 0.126 | 0.219 | 0.832 |
+| cut_lead | 10 | 0.252 | 0.392 | 0.796 |
+| damaged_case | 10 | 0.545 | 0.693 | 0.864 |
+| misplaced | 10 | 0.224 | 0.338 | 0.274 |
+
+</details>
+
+<details>
+<summary><b>🪵 Wood</b> — IoU: 0.322 | AU-PRO: 0.802</summary>
+
+| Defect Type | Images | IoU | Dice | AU-PRO |
+|:------------|:------:|:---:|:----:|:------:|
+| color | 8 | 0.368 | 0.515 | 0.876 |
+| combined | 11 | 0.343 | 0.470 | 0.751 |
+| hole | 10 | 0.129 | 0.217 | 0.833 |
+| liquid | 10 | 0.480 | 0.643 | 0.889 |
+| scratch | 21 | 0.309 | 0.444 | 0.744 |
+
+</details>
+
+<details>
+<summary><b>🧥 Zipper</b> — IoU: 0.280 | AU-PRO: 0.809</summary>
+
+| Defect Type | Images | IoU | Dice | AU-PRO |
+|:------------|:------:|:---:|:----:|:------:|
+| broken_teeth | 19 | 0.301 | 0.444 | 0.756 |
+| combined | 16 | 0.238 | 0.371 | 0.767 |
+| fabric_border | 17 | 0.237 | 0.379 | 0.846 |
+| fabric_interior | 16 | 0.286 | 0.435 | 0.819 |
+| rough | 17 | 0.314 | 0.458 | 0.735 |
+| split_teeth | 18 | 0.291 | 0.433 | 0.861 |
+| squeezed_teeth | 16 | 0.292 | 0.438 | 0.886 |
+
+</details>
+
+---
+
+## 📝 Metrics Explanation
+
+| Metric | Description |
+|--------|-------------|
+| **IoU** | Intersection over Union - overlap between prediction and ground truth |
+| **Dice** | Dice coefficient (F1 for segmentation) |
+| **Precision** | Ratio of correctly detected anomaly pixels |
+| **Recall** | Ratio of ground truth anomalies detected |
+| **AU-PRO** | Area Under Per-Region Overlap curve (MVTec standard) |
+
+---
+
+<div align="center">
+
+**[← Back to README](../README.md)**
+
+</div>
