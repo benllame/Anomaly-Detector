@@ -20,11 +20,18 @@ from typing import Dict, List, Optional, Tuple
 import matplotlib.gridspec as gridspec
 import matplotlib.pyplot as plt
 import numpy as np
+
 # Importar componentes del módulo eval
-from eval import (AnomalyEvaluator, DINOv2FeatureExtractor, MemoryBankDetector,
-                  MVTecDatasetEvaluator, load_images_from_folder,
-                  load_test_with_ground_truth, normalize_anomaly_map,
-                  resize_anomaly_map)
+from eval import (
+    AnomalyEvaluator,
+    DINOv2FeatureExtractor,
+    MemoryBankDetector,
+    MVTecDatasetEvaluator,
+    load_images_from_folder,
+    load_test_with_ground_truth,
+    normalize_anomaly_map,
+    resize_anomaly_map,
+)
 from PIL import Image
 
 

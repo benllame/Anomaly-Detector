@@ -68,8 +68,7 @@ class TestRealModels:
 
     def test_onnx_detector_initialization(self):
         """Verifica inicialización del detector ONNX."""
-        from deployment.inference_onnx import (MVTecONNXDetector,
-                                               list_available_classes)
+        from deployment.inference_onnx import MVTecONNXDetector, list_available_classes
 
         classes = list_available_classes(str(EXPORTED_DIR))
         if not classes:
